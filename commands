@@ -1,0 +1,58 @@
+pm2 start npm --name "estateplanners" -- start
+
+
+sudo rm /etc/nginx/sites-enabled/estateplanners
+
+
+sudo ln -s /etc/nginx/sites-available/estateplanners /etc/nginx/sites-enabled/
+
+
+sudo nginx -t
+sudo nginx -s reload
+
+
+#appling certibot
+sudo certbot --nginx -d estateplanners.pk
+sudo certbot --nginx -d www.estateplanners.pk
+
+
+#auto renew
+sudo certbot renew --dry-run
+
+
+sudo chmod 777 -R /var/estateplanners
+
+
+increase nginx form data size
+add this to  /etc/nginx/nginx.conf
+http {
+    ...
+    client_max_body_size 100M;
+} 
+
+systemctl restart nginx
+
+
+increase nginx form data size
+add this to  /etc/nginx/nginx.conf
+http {
+    ...
+    keepalive_timeout 600;
+    send_timeout 600;
+	proxy_connect_timeout   600;
+    proxy_send_timeout      600;
+    proxy_read_timeout      600;
+} 
+
+and add this to 
+add this to  /etc/nginx/uwsgi_params
+uwsgi_read_timeout 600s;
+systemctl restart nginx
+
+
+
+
+
+npm install error on ubuntu :     not found: make
+run this command and then try to install
+sudo apt install build-essential

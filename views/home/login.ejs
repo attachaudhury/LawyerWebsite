@@ -1,0 +1,44 @@
+<%- include head.ejs %>
+
+<div class="rs-breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs-inner text-center">
+            <h1 class="breadcrumbs-title white-color">Log In</h1>
+            <ul class="breadcrumbs-meta">
+                <li><a href="index-2.html">Home</a></li>
+                <li>Log In</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="rs-contact inner gray-bg pt-120 md-pt-80">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-lg-8 pr-30">
+                <div class="contact-wrap">
+                    <div class="sec-title mb-50">
+                        <h2 class="title mb-33">Log In </h2>
+                        
+                    </div>
+                    <form class="contact-inner-page">
+                        <div class="row">
+                            <form  action="/home/login" method="post">
+                                <div class="row">
+                                    <div class="col-12 mb-30"><input name="username" type="text" placeholder="User Name" required></div>
+                                    <div class="col-12 mb-30"><input name="password" type="password" placeholder="Password" required></div>
+                                    <div class="col-12 mb-30"><button type="submit" class="btn">Login</button></div>
+                                    
+                                </div>
+                            </form>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="g-map mt-120 md-mt-80">
+        <iframe src="https://maps.google.com/maps?q=37.803467%2C%20-122.472369&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe>
+    </div>
+</div>
+<%- include footer.ejs %>

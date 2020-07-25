@@ -1,0 +1,151 @@
+<% layout('./layout') -%>
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>Inquiry List</h1>
+    <p>All your Location</p>
+  </div>
+</div>
+<div class="container">
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <!-- <th style="width: 30%;" scope="col">Id</th> -->
+        <th scope="col" style="width:40%">Name</th>
+        <th scope="col" style="width:40%">Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var i=0; i < data.model.length; i++) { %>
+      <tr>
+        <!-- <td><%= data.model[i]._id %></td> -->
+        <td><%= data.model[i].name %></td>
+        <td><%= data.model[i].phone %></td>
+        <td style="cursor: pointer;">
+          <a id="<%= data.model[i]._id%>" onclick="deleteitem(this.id)"><i class="far fa-edit"></i></a>
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+<div class="modal" id="deleteconfirmdialog" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <h5>Email</h4>
+          <p id="formemail"></p>
+        </div>
+        <hr>
+        <div class="container">
+          <h5>Phone Secondary</h4>
+          <p id="formphonesecondary"></p>
+        </div>
+        <hr>
+        <div class="container">
+          <h5>righttimetocall</h4>
+          <p id="formrighttimetocall"></p>
+        </div>
+
+
+        <hr><div class="container">
+          <h5>bedrooms</h4>
+          <p id="formbedrooms"></p>
+        </div>
+        
+        <hr><div class="container">
+          <h5>city</h4>
+          <p id="formcity"></p>
+        </div>
+        
+        <hr><div class="container">
+          <h5>Description</h4>
+          <p id="formdescription"></p>
+        </div>
+        <hr><div class="container">
+          <h5>purpose</h4>
+          <p id="formpurpose"></p>
+        </div>
+        <hr><div class="container">
+          <h5>priceFrom</h4>
+          <p id="formpriceFrom"></p>
+        </div>
+        <hr><div class="container">
+          <h5>priceTo</h4>
+          <p id="formpriceTo"></p>
+        </div>
+        <hr><div class="container">
+          <h5>propertytype</h4>
+          <p id="formpropertytype"></p>
+        </div>
+        <hr><div class="container">
+          <h5>sizeFrom</h4>
+          <p id="formsizeFrom"></p>
+        </div>
+        <hr><div class="container">
+          <h5>sizeTo</h4>
+          <p id="formsizeTo"></p>
+        </div>
+        <hr>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="deleteconfirm()">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var deletingid;
+  var datalist = <%- JSON.stringify(data.model) %>;
+  function deleteconfirm() {
+    $("#deleteconfirmdialog").modal('hide')
+    $.ajax({
+      url: '/admin/inquirydelete?id=' + deletingid,
+      type: 'get',
+      success: function (data) {
+        if (data.status == "success") {
+          window.location.reload()
+          alert('success');
+        }
+        else {
+          alert(data.data);
+        }
+      },
+      error: function (data) {
+        alert('error');
+      }
+    })
+  }
+  function deleteitem(id) {
+    deletingid = id;
+    var item = datalist.find(el=>(el._id==id));
+    console.log(item)
+    $("#formemail").text(item.email)
+    $("#formphonesecondary").text(item.phonesecondary)
+    $("#formrighttimetocall").text(item.righttimetocall)
+    
+    
+    
+    $("#formbedrooms").text(item.bedrooms)
+    $("#formcity").text(item.city)
+    $("#formdescription").text(item.description)
+    $("#formpurpose").text(item.purpose)
+    $("#formpriceFrom").text(item.priceFrom)
+    $("#formpriceTo").text(item.priceTo)
+    $("#formpropertytype").text(item.propertytype)
+    $("#formsizeFrom").text(item.sizeFrom)
+    $("#formsizeTo").text(item.sizeTo)
+
+
+    $("#deleteconfirmdialog").modal('show')
+  }
+</script>

@@ -1,0 +1,38 @@
+
+<%- include head.ejs %>
+
+<div class="rs-breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs-inner text-center">
+            <h1 class="breadcrumbs-title white-color">Blogs</h1>
+            <ul class="breadcrumbs-meta">
+                <li><a href="index-2.html">Home</a></li>
+                <li>Blogs</li>
+            </ul>
+        </div>
+    </div>
+  </div>
+  <div class="rs-blog inner gray-bg pt-120 pb-120 md-pt-80 md-pb-80">
+    <div class="container">
+        <% for(var i=0; i < model.length; i++) { %>
+        <div class="row">
+  <div class="col-sm-12">
+ <div class="blog-item mb-60 xs-mb-60">
+    <div class="blog-image">
+        <img src="<%= model[i].image %>" alt="Blog Image">
+    </div>
+    <div class="text-bottom">
+        <h3 class="title"><a href="#"><%= model[i].author %></a></h3>
+        <ul class="blog-meta">
+            <li>June 10, 2019</li>
+            <li><%= model[i].author %></li>
+            <li><a href="#">Traffic Tikets</a></li>
+        </ul>
+        <div class="blog-desc"><%= model[i].description %></div>
+    </div>
+</div></div>
+</div>
+<% } %> 
+</div></div>
+
+<%- include footer.ejs %>

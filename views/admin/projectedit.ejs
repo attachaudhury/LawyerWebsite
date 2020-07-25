@@ -1,0 +1,192 @@
+<% layout('./layout') -%>
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>Update Project</h1>
+    <%if (data.message) { %>
+    <p style="color: red;"><%= data.message %></p>
+    <% }else{ %>
+    <p>Edit your project here</p>
+    <% } %>
+  </div>
+</div>
+<div>
+  <form class="container" action="/admin/projectedit" method="post">
+    <div class="row">
+      <div class="form-group col">
+        <label for="project">name</label>
+        <input name="_id" type="text" style="display: none;" value="<%= data.model._id%>" class="form-control">
+        <input id="name" name="name" type="text" value="<%= data.model.name || '' %>" class="form-control">
+      </div>
+      <div class="form-group col">
+        <label for="location">location</label>
+        <input id="location" name="location" type="text" value="<%= data.model.location || '' %>" class="form-control">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col">
+        <label for="description">description</label>
+        <textarea style="height: 180px;" id="description" name="description" type="text"
+          class="form-control"><%= data.model.description  %></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <button  type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </form>
+</div>
+
+<div class="container">
+  <h3>Logo</h3>
+  <input type="file" onchange="imageschanged('logoimage',event)" />
+  <img style="width: 150px;height: 150px;object-fit: cover;" src="<%= data.model.logoimage %>"/> 
+</div>
+<hr>
+<div class="container">
+  <h3>Images</h3>
+  <input type="file" onchange="imageschanged('images',event)" />
+  <% for(var i=0; i < data.model.images.length; i++) { %>
+    <div style="width: 150px; display: inline-block;">
+      <img style="width: 150px;height: 150px;object-fit: cover;" src="<%= data.model.images[i] %>"/> 
+      <button id="<%=data.model.images[i] %>" onclick="deleteImage('images',this.id)">Delete</button>
+    </div>
+  <% } %>
+</div>
+<hr>
+<div class="container">
+  <h3>Maps</h3>
+  <% for(var i=0; i < data.model.mapimages.length; i++) { %>
+    <div style="width: 150px; display: inline-block;">
+      <img style="width: 150px;height: 150px;object-fit: cover;" src="<%= data.model.mapimages[i].thumbnailimage %>"/> 
+      <button id="<%=data.model.mapimages[i]._id %>" onclick="deletemapImage(this.id)">Delete</button>
+    </div>
+  <% } %>
+
+  <button onclick="UploadMapClicked()">Upload Map</button>
+</div>
+<hr>
+<div class="container">
+  <h3>payment plan Image</h3>
+  <input type="file" onchange="imageschanged('paymentplanimage',event)" />
+  <img style="width: 150px;height: 150px;object-fit: cover;" src="<%= data.model.paymentplanimage %>"/> 
+</div>
+
+<div class="modal" id="modaluploadimage" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload Map</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <label  class="btn btn-primary">Upload Thumbnail <input type="file" onchange="mapthumnailimagechangedinmodal(event)" hidden/></label>
+          
+        </div>
+        <div>
+          <label  class="btn btn-primary">Upload Image  <input type="file" onchange="mapimagechangedinmodal(event)" hidden/></label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="savedClickedInModal()">Upload Map</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var listingid = "<%= data.model._id %>";
+var listingdescription = `<%= data.model.description %>`;
+function deleteImage(type,path){
+  $.ajax({
+      url:'/admin/projectdeleteimage',
+      type:'post',
+      data:{listingid:listingid,type:type,imagepath:path},
+      success:function(data){
+        window.location.reload();
+      }
+    })
+}
+function imageschanged(type,event){
+  if(event.target.files.length>0)
+  {
+    var formdata = new FormData();
+    formdata.append('files',event.target.files[0])
+    formdata.append('listingid',listingid)
+    formdata.append('imagetype',type)
+    $.ajax({
+      url:'/admin/projectaddimage',
+      type:'post',
+      processData:false,
+      contentType:false,
+      data:formdata,
+      success:function(data){
+        window.location.reload();
+      }
+    })
+  }
+}
+
+
+
+// map images section
+var mapthumbnailimage = null;
+var mapimage = null;
+function UploadMapClicked(){
+  mapthumbnailimage = null;
+  mapimage = null;
+  $("#modaluploadimage").modal('show')
+}
+function mapthumnailimagechangedinmodal(event)
+{
+  mapthumbnailimage = event.target.files[0] ;
+}
+function mapimagechangedinmodal(event)
+{
+  mapimage = event.target.files[0] ;
+}
+function savedClickedInModal()
+{
+  if(mapthumbnailimage==null || mapimage==null)
+  {
+    alert('Please upload both images');
+  }
+  else{
+    $("#modaluploadimage").modal('hide');
+    var formdata = new FormData();
+    formdata.append('thumnailimage',mapthumbnailimage)
+    formdata.append('image',mapimage)
+    formdata.append('listingid',listingid)
+    $.ajax({
+      url:'/admin/projectaddmap',
+      type:'post',
+      processData:false,
+      contentType:false,
+      data:formdata,
+      success:function(data){
+        window.location.reload();
+      }
+    })
+  }
+}
+function deletemapImage(mapid){
+  $.ajax({
+      url:'/admin/projectdeletemapimage',
+      type:'post',
+      data:{listingid:listingid,mapid:mapid},
+      success:function(data){
+        console.log(data)
+        window.location.reload();
+      }
+    })
+}
+tinymce.init({
+    selector: '#description',
+    setup: function (editor) {
+        editor.on('init', function () {
+            //editor.setHTML(content);
+        });
+    } 
+  });
+</script>

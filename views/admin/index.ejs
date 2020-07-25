@@ -1,0 +1,71 @@
+<% layout('./layout') -%>
+<style>
+  .example {
+    display: inline-block;
+    margin-right: 3%;
+    width: 30%;
+    min-width: 220px;
+    vertical-align: text-top;
+  }
+
+  /* Card Styles */
+  .card {
+    background-color: #ffffff;
+    text-align: left;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .card__body {
+    padding: 16px 0;
+  }
+
+  .card__supporting-text {
+    padding: 10px 10px;
+    text-align: center;
+  }
+  .card__supporting-text span {
+    font-size: 70px;
+    vertical-align: -webkit-baseline-middle;
+  }
+
+  /* Material & utility classes */
+  .bg--deep-purple {
+    color: #ffffff;
+    background-color: #673ab7;
+  }
+  .bg--deep-orange {
+    color: #ffffff;
+    background-color: #bf360c;
+  }
+  .bg--deep-green {
+    color: #ffffff;
+    background-color: #33691e;
+  }
+</style>
+<div class="jumbotron">
+  <div class="container">
+    <div class="text-center">
+      <div class="example">
+        <article class="card bg--deep-purple">
+          <div class="card__body">
+            <div class="card__supporting-text">
+              Blogs <span><%= data.blogs%></span>
+            </div>
+          </div>
+        </article>
+      </div>
+      
+      <div class="example">
+        <article class="card bg--deep-green">
+          <div class="card__body">
+            <div class="card__supporting-text">
+              Users <span><%= data.users%></span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </div>
+</div>
