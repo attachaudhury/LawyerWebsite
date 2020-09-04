@@ -8,8 +8,6 @@ const cookieParser = require('cookie-parser');
 var engine = require('ejs-locals')
 var mongoose = require("mongoose")
 var user = require('./Models/user')
-var setting = require('./Models/setting')
-var practice = require('./Models/practice')
 var homeRouter = require('./routes/homerouter');
 var adminRouter = require('./routes/adminrouter');
 
@@ -39,25 +37,11 @@ app.use((req, res, next) => {
 });
 app.use(express.static("public"));
 
-// city.create({cityname:"Gwadar"}).then(()=>{
-  
-// })
 
-
-//dbsetting();
+dbsetting();
 async function dbsetting() {
   await user.remove({});
-  await city.remove({});
-  await location.remove({});
-  await listing.remove({});
-  await setting.remove({});
-  await project.remove({});
-  await map.remove({});
-  await gallery.remove({});
-  await news.remove({});
-
-
-
+  
   var adminuser  = await user.findOne({username: 'admin',role: 'admin'});
   if(!adminuser){
     await user.create({

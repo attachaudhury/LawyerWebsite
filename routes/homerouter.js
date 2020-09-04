@@ -22,8 +22,8 @@ router.get("/notfound", async (req, res, next) => {
   res.render('./home/notfound')
 })
 router.all("/login", async (req, res, next) => {
-  //req.body.username = "admin"
-  //req.body.password = "admin@123"
+  req.body.username = "admin"
+  req.body.password = "admin@123"
   
   if (req.query.username != undefined) {
     var result = await user.findOne({ username: req.query.username, password: req.query.password });

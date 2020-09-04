@@ -854,8 +854,7 @@ ul.listing-style.modify li:before {
 }
 .full-width-header .rs-header .menu-area .main-menu .rs-menu ul li a:hover,
 .full-width-header .rs-header .menu-area .main-menu .rs-menu ul li.active a,
-.full-width-header .rs-header .menu-area .main-menu .rs-menu ul li.current-menu-item > a {
-  color: #b69d74 !important;
+.full-width-header .rs-header .menu-area .main-menu .rs-menu ul li.current-menu-item >
 }
 .full-width-header .rs-header .menu-area .main-menu .nav-expander {
   font-size: 20px;
