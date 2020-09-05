@@ -43,13 +43,18 @@
       </div>
       <div class="modal-body">
         <div class="container">
+          <h5>Name</h4>
+          <p id="formname"></p>
+        </div>
+        <hr>
+        <div class="container">
           <h5>Email</h4>
           <p id="formemail"></p>
         </div>
         <hr>
         <div class="container">
-          <h5>Phone Secondary</h4>
-          <p id="formphonesecondary"></p>
+          <h5>Phone</h4>
+          <p id="formphone"></p>
         </div>
         <hr>
         <div class="container">
@@ -61,6 +66,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 <script>
   var deletingid;
@@ -88,9 +94,9 @@
     deletingid = id;
     var item = datalist.find(el=>(el._id==id));
     console.log(item)
+    $("#formname").text(item.name)
     $("#formemail").text(item.email)
-    $("#formphonesecondary").text(item.phonesecondary)
-    $("#formdescription").text(item.description)
+    $("#formphone").text(item.phone)
     $("#deleteconfirmdialog").modal('show')
   }
 </script>

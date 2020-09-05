@@ -37,9 +37,7 @@ router.get("/about", async (req, res, next) => {
   res.render('./home/about.ejs', {});
 })
 
-router.get("/case-result", async (req, res, next) => {
-  res.render('./home/case-result.ejs', {});
-})
+
 
 router.get("/contact", async (req, res, next) => {
   try {
@@ -56,15 +54,16 @@ router.post("/contact", async (req, res, next) => {
     var contactobj = { ...req.body };
     await contact.create(contactobj);
     var model = new contact({});
-    res.render('./home/contact', { model: model, message: "Your inquiry submitted" });
+    res.json({ status: 'success' });
   } catch (ex) {
     res.json({ status: 'failed', data: ex.message })
   }
 })
 
-router.get("/practice-area", async (req, res, next) => {
 
-  res.render('./home/practice-area.ejs', { staticdata });
+
+router.get("/practice-area", async (req, res, next) => {
+  res.render('./home/practice-area.ejs', {});
 })
 
 

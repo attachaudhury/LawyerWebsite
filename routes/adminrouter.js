@@ -10,10 +10,10 @@ router.get("/", auth, async (req, res, next) => {
 })
 router.get("/index", auth, async (req, res, next) => {
   var loggedinuser = await user.findById(req.user);
-  var blogs = await contact.find({}).count();
+  var contacts = await contact.find({}).count();
   var users = await user.find({}).count();
 
-  res.render('./admin/index', { data: { blogs: blogs, users: users }, loggedinuser: loggedinuser });
+  res.render('./admin/index', { data: { contacts: contacts, users: users }, loggedinuser: loggedinuser });
 })
 router.get("/logout", async (req, res, next) => {
   res.clearCookie('AuthToken')

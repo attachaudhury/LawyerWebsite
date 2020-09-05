@@ -1,6 +1,14 @@
 
 <%- include head.ejs %>
+<html>
+<head>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+
+</head>
+
+
+</html>
 <div class="rs-breadcrumbs">
     <div class="container">
         <div class="breadcrumbs-inner text-center">
@@ -61,22 +69,25 @@
                         <h2 class="title mb-33">Get In Touch</h2>
                         
                     </div>
-                        <form class="contact-inner-page" action="/home/contact" method="post">
+                        <form class="contact-inner-page"  id="submit_form">
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="text"  name="name" placeholder="Your Name" required>
+                                <input type="text"  name="name" id="name" placeholder="Your Name" required>
                             </div>
                             <div class="col-md-6">
-                                <input type="email"  name="email" placeholder="Your Email" required>
+                                <input type="email"  name="email" id="email" placeholder="Your Email" required>
                             </div>
                             <div class="col-md-12">
-                                <input type="text"  name="phone" placeholder="Your Phone" required>
+                                <input type="text"  name="phone" id="phone" placeholder="Your Phone" required>
                             </div>
                             
                             <div class="col-md-12">
-                                <textarea placeholder="Your Message" name="message" required></textarea>
-                                <button type="submit" class="readon upper">Submit Request</button>
-                            </div>
+                                <textarea placeholder="Your Message" name="message" id="message" required></textarea>
+                                <input onclick="myFunction()" type="button" name="submit" id="submit" class="readon upper" value="Submit" />  
+                                <span id="error_message" class="text-danger"></span>  
+                                <span id="success_message" class="text-success"></span>
+                                <div id="snackbar">Your Inquiry Submitted Successfully</div>
+                                </div>
                         </div>
                     </form>
                 </div>
@@ -88,5 +99,86 @@
     </div>
 </div>
 
+  </div>
+<script>  
+    $(document).ready(function(){  
+         $('#submit').click(function(event){ 
+            event.preventDefault(); 
+          
+              var name = $('#name').val();
+              var email = $('#email').val();
+              var phone = $('#phone').val();  
+              var message = $('#message').val();  
+              if(name == '' || email == '' || phone == '' || message == '')  
+              {  
+                   $('#error_message').html("All Fields are required");  
+              }  
+              else  
+              {  
+                   $('#error_message').html('');  
+                   $.ajax({  
+                        url:"/home/contact",  
+                        method:"POST",  
+                        data:{name:name, email:email, phone:phone, message:message},  
+                        success:function(data){  
+                            document.getElementById("submit_form").reset();
+                            var x = document.getElementById("snackbar");
+                            x.className = "show";
+                            setTimeout(function(){ x.className = x.className.replace("show", "");
+                             }, 3000);
+                        }
+                         
+                   }); 
+                         
+              }  
+         });  
+    });  
+
+  
+    </script> 
+    
+    <style>
+        #snackbar {
+          visibility: hidden;
+          min-width: 250px;
+          margin-left: -125px;
+          background-color: rgb(55, 194, 0);
+          color: #fff;
+          text-align: center;
+          border-radius: 2px;
+          padding: 16px;
+          position: fixed;
+          z-index: 1;
+          left: 50%;
+          bottom: 30px;
+          font-size: 17px;
+        }
+        
+        #snackbar.show {
+          visibility: visible;
+          -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+          animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        
+        @-webkit-keyframes fadein {
+          from {bottom: 0; opacity: 0;} 
+          to {bottom: 30px; opacity: 1;}
+        }
+        
+        @keyframes fadein {
+          from {bottom: 0; opacity: 0;}
+          to {bottom: 30px; opacity: 1;}
+        }
+        
+        @-webkit-keyframes fadeout {
+          from {bottom: 30px; opacity: 1;} 
+          to {bottom: 0; opacity: 0;}
+        }
+        
+        @keyframes fadeout {
+          from {bottom: 30px; opacity: 1;}
+          to {bottom: 0; opacity: 0;}
+        }
+        </style>
 
 <%- include footer.ejs %>
