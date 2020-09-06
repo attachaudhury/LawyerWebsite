@@ -1,10 +1,10 @@
-pm2 start npm --name "estateplanners" -- start
+pm2 start npm --name "csj" -- start
 
 
-sudo rm /etc/nginx/sites-enabled/estateplanners
+sudo rm /etc/nginx/sites-enabled/csj
 
 
-sudo ln -s /etc/nginx/sites-available/estateplanners /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/csj /etc/nginx/sites-enabled/
 
 
 sudo nginx -t
@@ -12,15 +12,15 @@ sudo nginx -s reload
 
 
 #appling certibot
-sudo certbot --nginx -d estateplanners.pk
-sudo certbot --nginx -d www.estateplanners.pk
+sudo certbot --nginx -d csj.pk
+sudo certbot --nginx -d www.csj.pk
 
 
 #auto renew
 sudo certbot renew --dry-run
 
 
-sudo chmod 777 -R /var/estateplanners
+sudo chmod 777 -R /var/csj
 
 
 increase nginx form data size

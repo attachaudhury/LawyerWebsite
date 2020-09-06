@@ -1,9 +1,9 @@
 server {
     listen 80;
-    server_name estateplanners.pk; 
-    root /var/www/estateplanners;
+    server_name csj.com.pk www.csj.com.pk; 
+    root /var/www/cjs;
     location / {
-        proxy_pass http://localhost:8000;
+        proxy_pass http://localhost:8012;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection keep-alive;
