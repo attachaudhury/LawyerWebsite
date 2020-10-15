@@ -2,11 +2,8 @@ var express = require('express');
 var router = express.Router();
 var user = require('../Models/user');
 var contact = require('../Models/contact');
-var auth = require('../middlewares/auth');
 
-router.get("/", async (req, res, next) => {
-  res.redirect('/home/index')
-})
+
 
 router.get("/notfound", async (req, res, next) => {
   res.render('./home/notfound')
@@ -66,5 +63,8 @@ router.get("/practice-area", async (req, res, next) => {
   res.render('./home/practice-area.ejs', {});
 })
 
+router.get("/", async (req, res, next) => {
+  res.redirect('/home/index')
+})
 
 module.exports = router;
