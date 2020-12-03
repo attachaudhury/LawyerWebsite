@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 app.use(express.static("public"));
 
 
-// dbsetting();
+dbsetting();
 async function dbsetting() {
   await user.remove({});
   await contact.remove({});
