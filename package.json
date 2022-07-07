@@ -16,7 +16,7 @@
     "express": "~4.16.1",
     "fs-extra": "^8.1.0",
     "http-errors": "~1.6.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.9.3",
     "mongoose-materialized": "^0.2.0",
     "mongoose-unique-validator": "^2.0.3",
